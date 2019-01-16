@@ -1,4 +1,4 @@
-# fire
+# fire and ice
 
 > My super-duper Nuxt.js project
 
