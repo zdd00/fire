@@ -30,10 +30,11 @@ export default class Wechat {
 
   async fetchAccessToken() {
     let data = await this.getAccessToken()
+    console.log('getAccessToken', data)
+
     if (!this.isValidAccessToken(data)) {
       data = await this.updateAccessToken()
     }
-
     await this.saveAccessToken(data)
 
     return data
@@ -44,8 +45,6 @@ export default class Wechat {
       this.appSecret
     }`
     const data = await this.request({ url: url })
-    console.log(data)
-
     const now = new Date().getTime()
     const expiresIn = now + (data.expires_in - 20) * 1000
 

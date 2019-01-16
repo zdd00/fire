@@ -1,5 +1,5 @@
 export default {
-  db: 'mongodb://localhost/ice',
+  db: 'mongodb://127.0.0.1:27017/ice',
   wechat: {
     token: 'weixin',
     appID: 'wx318bc4442720c2e5',
