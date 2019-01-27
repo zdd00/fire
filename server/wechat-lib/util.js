@@ -1,14 +1,18 @@
-import xml2js from 'xml2js';
-import template from './tpl';
+import xml2js from 'xml2js'
+import template from './tpl'
 
 function parseXML(xml) {
   return new Promise((resolve, reject) => {
-    xml2js.parseString(xml, {
-      trim: true
-    }, (err, content) => {
-      if (err) reject(err)
-      else resolve(content)
-    })
+    xml2js.parseString(
+      xml,
+      {
+        trim: true
+      },
+      (err, content) => {
+        if (err) reject(err)
+        else resolve(content)
+      }
+    )
   })
 }
 
@@ -35,8 +39,6 @@ function formatMessage(result) {
       }
     }
   }
-  console.log('message', message);
-
   return message
 }
 
@@ -51,20 +53,19 @@ function tpl(content, message) {
   if (content && content.type) {
     type = content.type
   }
-  let info = Object.assign({}, {
-    content: content,
-    createTime: new Date().getTime(),
-    msgType: type,
-    toUserName: message.FromUserName,
-    fromUserName: message.ToUserName,
-  })
-  console.log('info', info);
+  let info = Object.assign(
+    {},
+    {
+      content: content,
+      createTime: new Date().getTime(),
+      msgType: type,
+      toUserName: message.FromUserName,
+      fromUserName: message.ToUserName
+    }
+  )
+  // console.log('info', info)
 
   return template(info)
 }
 
-export {
-  formatMessage,
-  parseXML,
-  tpl
-}
+export { formatMessage, parseXML, tpl }

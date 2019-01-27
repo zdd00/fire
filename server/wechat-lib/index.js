@@ -1,8 +1,17 @@
 import request from 'request-promise'
+import formsteam from 'formsteam';
+import fs from 'fs';
 
 const base = 'https://api.weixin.qq.com/cgi-bin/'
 const api = {
-  accessToken: `${base}token?grant_type=client_credential`
+  accessToken: `${base}token?grant_type=client_credential`,
+  permanent:{
+    upload: `${base}media/upload`,
+    uploadNews: `${base}token?grant_type=client_credential`,
+    uploadNewsPic: `${base}token?grant_type=client_credential`,
+    fetch: `${base}token?grant_type=client_credential`,
+    del: `${base}token?grant_type=client_credential`,
+  }
 }
 
 export default class Wechat {
@@ -30,7 +39,7 @@ export default class Wechat {
 
   async fetchAccessToken() {
     let data = await this.getAccessToken()
-    console.log('getAccessToken', data)
+    // console.log('getAccessToken', data)
 
     if (!this.isValidAccessToken(data)) {
       data = await this.updateAccessToken()
@@ -63,6 +72,28 @@ export default class Wechat {
       return true
     } else {
       return false
+    }
+  }
+
+  uploadMaterial(token, type, material, permanent) {
+    let form = {}
+    let url = api.temporary.uploadMaterial
+
+    if (permanent) {
+      url = api.permanent.upload
+    }
+
+    if (type === 'pic') {
+      url = api.permanent.uploadMewPic
+    }
+
+    if(type ==='news'){
+      url = api.permanent.uploadNews
+    } else{
+      form = formsteam()
+      const stat = await statFile(material)
+
+      form.file('media', material, path.basename(material), stat.size)
     }
   }
 }
